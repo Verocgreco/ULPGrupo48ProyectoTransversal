@@ -118,9 +118,9 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(Consulta);
 
         Salir.setText("Salir");
-        Salir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SalirActionPerformed(evt);
+        Salir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SalirMouseClicked(evt);
             }
         });
         jMenuBar1.add(Salir);
@@ -222,13 +222,10 @@ public class Menu extends javax.swing.JFrame {
                   
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+    private void SalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalirMouseClicked
         // TODO add your handling code here:
         System.exit(0);
-        
-       
-       
-    }//GEN-LAST:event_SalirActionPerformed
+    }//GEN-LAST:event_SalirMouseClicked
 
     /**
      * @param args the command line arguments
