@@ -10,20 +10,22 @@ package entidades;
  * @author arielvallejos
  */
 public class Inscripcion {
+
+
     
-    private int idInscripto;
+    private int idInscripcion;
     private Alumno alumno;
     private Materia materia;
-    private double nota;
+    private Double nota;
 
-    public Inscripcion(int idInscripcion, Alumno alumno, Materia materia, double nota) {
-        this.idInscripto = idInscripcion;
+    public Inscripcion(int idInscripcion, Alumno alumno, Materia materia, Double nota) {
+        this.idInscripcion = idInscripcion;
         this.alumno = alumno;
         this.materia = materia;
         this.nota = nota;
     }
 
-    public Inscripcion(Alumno alumno, Materia materia, double nota) {
+    public Inscripcion(Alumno alumno, Materia materia, Double nota) {
         this.alumno = alumno;
         this.materia = materia;
         this.nota = nota;
@@ -48,30 +50,28 @@ public class Inscripcion {
         this.materia = materia;
     }
 
-    public int getIdInscripto() {
-        return idInscripto;
+    public int getIdInscripcion() {
+        return idInscripcion;
     }
 
-    public void setIdInscripto(int idInscripto) {
-        this.idInscripto = idInscripto;
+    public void setIdInscripcion(int idInscripcion) {
+        this.idInscripcion = idInscripcion;
     }
 
-    public double getNota() {
+    public Double getNota() {
         return nota;
     }
 
-    public void setNota(double nota) {
+    public void setNota(Double nota) {
         this.nota = nota;
     }
 
     @Override
     public String toString() {
-        return "Alumno: " + alumno + ", Materia: " + materia + ", Nota=" + nota;
+        String Insc = idInscripcion+""+alumno.getApellido()+", "+alumno.getNombre()+", "+materia.getNombre();
+        return Insc;
     }
     
-    
-    
- 
-    
+
     
 }
