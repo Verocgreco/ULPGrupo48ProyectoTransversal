@@ -115,7 +115,7 @@ public class Menu extends javax.swing.JFrame {
 
         Consulta.setText("Consulta");
 
-        jMenuItem5.setText("Alumnos Por Notas");
+        jMenuItem5.setText("Alumnos Por Materia");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
