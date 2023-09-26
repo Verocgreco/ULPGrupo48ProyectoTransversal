@@ -270,8 +270,9 @@ InscripcionData inscData = new InscripcionData();
 
     private void jbInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInscribirActionPerformed
         // TODO add your handling code here:
-        Alumno alumnos=(Alumno)jcbAlumnos.getSelectedItem();
+        try{
         
+        Alumno alumnos=(Alumno)jcbAlumnos.getSelectedItem();     
         
        int fs=(int) modelo.getValueAt(jtTabla.getSelectedRow(), 0);
        
@@ -282,6 +283,9 @@ InscripcionData inscData = new InscripcionData();
        insc.setMateria(ma);
        inscData.guardarInscripcion(insc);
           matNoInsc();
+        }catch(ArrayIndexOutOfBoundsException e){
+          JOptionPane.showMessageDialog(this,"Selecione una materia");  
+        }
     }//GEN-LAST:event_jbInscribirActionPerformed
 
     private void jbAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularActionPerformed
@@ -292,7 +296,7 @@ InscripcionData inscData = new InscripcionData();
         inscData.BorrarInscMateriaAlumno(alumnos.getIdAlumno(), fs);
             matInsc();
       }catch(ArrayIndexOutOfBoundsException e){
-            JOptionPane.showMessageDialog(this,"Selecione un alumno");
+            JOptionPane.showMessageDialog(this,"Selecione una materia");
         }//TRY-CATCH
     }//GEN-LAST:event_jbAnularActionPerformed
 

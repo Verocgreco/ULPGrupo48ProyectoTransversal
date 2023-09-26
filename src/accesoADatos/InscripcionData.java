@@ -46,7 +46,7 @@ public class InscripcionData {
                     if(rsGI.next()){
             
             Insc.setIdInscripcion(rsGI.getInt(1));
-            JOptionPane.showMessageDialog(null, "Agregado con Exito");
+            JOptionPane.showMessageDialog(null, "Inscripción exitosa");
         }
         psGI.close();
             
@@ -96,7 +96,7 @@ public class InscripcionData {
             int fila =psBIMA.executeUpdate();
             
             if(fila >0){
-            JOptionPane.showMessageDialog(null, "Ejecutado con Exito BIMA");
+            JOptionPane.showMessageDialog(null, "Inscripción anulada con éxito");
             
             }
             psBIMA.close();

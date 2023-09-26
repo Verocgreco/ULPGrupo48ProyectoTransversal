@@ -147,7 +147,7 @@ public class ManejoNotas extends javax.swing.JInternalFrame {
         try {
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // CAPTURA EL EVENTO DE APRETAR EL ENTER
                 double nota = Double.parseDouble((String) modelo.getValueAt(jtTabla.getSelectedRow(), 2));
-                if (nota > 0 && nota <= 10) {
+                if (nota >= 0 && nota <= 10) {
                 Alumno alumnos = (Alumno) jcbAlumnos.getSelectedItem();
                 int id = (int) modelo.getValueAt(jtTabla.getSelectedRow(), 0);
 
@@ -157,7 +157,7 @@ public class ManejoNotas extends javax.swing.JInternalFrame {
                 }
             }
         } catch (NumberFormatException nf) {
-            JOptionPane.showMessageDialog(this, "Ingrese numeros Pls");
+            JOptionPane.showMessageDialog(this, "Ingrese números por favor");
         } catch (NullPointerException np) {
             JOptionPane.showMessageDialog(this, "Seleccione alumno y materia");
         } catch (ClassCastException cc) {
