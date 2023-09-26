@@ -1,3 +1,4 @@
+
 package vistas;
 
 import accesoADatos.*;
@@ -12,17 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class FormularioAlumno extends javax.swing.JInternalFrame {
 
-    private Connection conn = null;
-    AlumnoData aluData = new AlumnoData();
-    int idAlum;
+public class FormularioAlumno extends javax.swing.JInternalFrame {
+private Connection conn=null;
+AlumnoData aluData =new AlumnoData();
+int idAlum ;
 
     public FormularioAlumno() {
-        this.conn = Conexion.getConexion();
+        this.conn=Conexion.getConexion();
+        
 
         initComponents();
-
+        
         block();
     }
 
@@ -219,108 +221,88 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
-
-        try {
+        
+        try{
             Alumno AluEnc = aluData.BuscarAlumno(Integer.parseInt(jtDni.getText()));
-            idAlum = AluEnc.getIdAlumno();
-            jtApellido.setText(AluEnc.getApellido());
-            jtNombre.setText(AluEnc.getNombre());
-            if (AluEnc.isEstado() == true) {
-                jrbTrue.setSelected(true);
-            } else if (AluEnc.isEstado() == false) {
-                jrbFalse.setSelected(true);
-            }//IF-ELSE
-            jdcFNacimiento.setDate(Date.valueOf(AluEnc.getFechaNacimiento()));
-            bBlock();
-            this.jtDni.requestFocus();
-            System.out.println(idAlum);
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "Error no encotrado");
-        } catch (NumberFormatException nf) {
-            JOptionPane.showMessageDialog(this, "Ingrese numeros Pls");
-        }//TRY-CATCH
-
-
+            idAlum=AluEnc.getIdAlumno();
+                jtApellido.setText(AluEnc.getApellido());
+                jtNombre.setText(AluEnc.getNombre());
+                    if(AluEnc.isEstado()== true){
+                        jrbTrue.setSelected(true);
+                    }else if(AluEnc.isEstado()== false){
+                        jrbFalse.setSelected(true);
+                    }//IF-ELSE
+                jdcFNacimiento.setDate(Date.valueOf(AluEnc.getFechaNacimiento()));
+                bBlock();
+                this.jtDni.requestFocus();
+                System.out.println(idAlum);
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this,"Error no encotrado");
+        }catch(NumberFormatException nf){
+            JOptionPane.showMessageDialog(this,"Ingrese numeros Pls");
+            }//TRY-CATCH
+        
+        
+        
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
-        try {
-            int dni = Integer.parseInt(jtDni.getText());
-            LocalDate fechaNacimiento = jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            if (dni > 0) {
-                // Validar que la fecha sea anterior a la actual
-                LocalDate fechaActual = LocalDate.now();
-                if (fechaNacimiento.isBefore(fechaActual)) {
-                    Alumno alumno = aluData.BuscarAlumnoPorId(idAlum);
-                    alumno.setDni(Integer.parseInt(jtDni.getText()));
-                    alumno.setApellido(jtApellido.getText());
-                    alumno.setNombre(jtNombre.getText());
-                    alumno.setFechaNacimiento(jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-                    if (jrbTrue.isSelected()) {
+        try{
+            
+            Alumno alumno = aluData.BuscarAlumnoPorId(idAlum);
+                alumno.setDni(Integer.parseInt(jtDni.getText()));
+                alumno.setApellido(jtApellido.getText());
+                alumno.setNombre(jtNombre.getText());
+                alumno.setFechaNacimiento(jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                    if(jrbTrue.isSelected()){
                         alumno.setEstado(true);
 
-                    } else if (jrbFalse.isSelected()) {
+                    }else if(jrbFalse.isSelected()){
                         alumno.setEstado(false);
                     }//IF-ELSE 
-
-                    aluData.modificarAlumnos(alumno);
-                }else{
-                    JOptionPane.showMessageDialog(this, "Ingrese una fecha válida");
-                }
-            }else{
-                JOptionPane.showMessageDialog(this, "Ingrese un DNI válido");
-            }
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "Error no encotrado");
-        } catch (NumberFormatException nf) {
-            JOptionPane.showMessageDialog(this, "Ingrese numeros Pls");
-        }//TRY-CATCH
+                    
+                            aluData.modificarAlumnos(alumno);
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this,"Error no encotrado");
+        }catch(NumberFormatException nf){
+            JOptionPane.showMessageDialog(this,"Ingrese numeros Pls");
+            }//TRY-CATCH
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         // TODO add your handling code here:
-
-        for (Alumno alu : aluData.listarAlumnos()) {
-            if (alu.getDni() == Integer.parseInt(jtDni.getText())) {
-                aluData.eliminarAlumno(alu.getIdAlumno());
-            }//IF
-
-        }//FOR EACH
-
+ 
+            for(Alumno alu :aluData.listarAlumnos()){
+                if(alu.getDni()==Integer.parseInt(jtDni.getText())){
+                    aluData.eliminarAlumno(alu.getIdAlumno());    
+                }//IF
+                  
+            }//FOR EACH
+        
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
         // TODO add your handling code here:
-        try {
-            int dni = Integer.parseInt(jtDni.getText());
-            LocalDate fechaNacimiento = jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            if (dni > 0) {
-                LocalDate fechaActual = LocalDate.now();
-                if (fechaNacimiento.isBefore(fechaActual)) {
-                    Alumno alumno = new Alumno();
-                    alumno.setDni(Integer.parseInt(jtDni.getText()));
-                    alumno.setApellido(jtApellido.getText());
-                    alumno.setNombre(jtNombre.getText());
-                    alumno.setFechaNacimiento(jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-                    if (jrbTrue.isSelected()) {
+        try{
+            Alumno alumno = new Alumno();
+                alumno.setDni(Integer.parseInt(jtDni.getText()));
+                alumno.setApellido(jtApellido.getText());
+                alumno.setNombre(jtNombre.getText());
+                alumno.setFechaNacimiento(jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                    if(jrbTrue.isSelected()){
                         alumno.setEstado(true);
-                    } else if (jrbFalse.isSelected()) {
-                        alumno.setEstado(false);
+                    }else if(jrbFalse.isSelected()){
+                            alumno.setEstado(false);
                     }//IF-ELSE                
-                    aluData.GuardarAlumno(alumno);
-                    LimpiarCampos();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Ingrese una fecha válida");
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Ingrese un DNI válido");
-            }
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "Complete todos los Campos");
-        } catch (NumberFormatException nf) {
-            JOptionPane.showMessageDialog(this, "Ingrese numeros Pls");
-        }//TRY-CATCH
+                aluData.GuardarAlumno(alumno);
+                LimpiarCampos();
+                
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this,"Complete todos los Campos");
+        }catch(NumberFormatException nf){
+            JOptionPane.showMessageDialog(this,"Ingrese numeros Pls");
+            }//TRY-CATCH
 
     }//GEN-LAST:event_jbAgregarActionPerformed
 
@@ -332,11 +314,11 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
     private void jtDniKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtDniKeyReleased
         // TODO add your handling code here:
-        if (!jtDni.getText().isEmpty()) {
-            disblock();
-        } else if (jtDni.getText().isEmpty()) {
-            block();
-        }
+       if(!jtDni.getText().isEmpty()){
+       disblock();
+       }else if(jtDni.getText().isEmpty()){
+       block();
+       }
     }//GEN-LAST:event_jtDniKeyReleased
 
 
@@ -361,41 +343,43 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtNombre;
     // End of variables declaration//GEN-END:variables
 
-    public void LimpiarCampos() {
-        jtDni.setText("");
-        jtApellido.setText("");
-        jtNombre.setText("");
-        gruupo1.clearSelection();
-        jdcFNacimiento.setDate(null);
+public void LimpiarCampos(){
+    jtDni.setText("");
+    jtApellido.setText("");
+    jtNombre.setText("");
+    gruupo1.clearSelection();
+    jdcFNacimiento.setDate(null);
+    
+}
 
-    }
 
-    public void block() {
-        jtApellido.setEnabled(false);
-        jtNombre.setEnabled(false);
-        jrbTrue.setEnabled(false);
-        jrbFalse.setEnabled(false);
-        jdcFNacimiento.setEnabled(false);
-        jbGuardar.setEnabled(false);
-        jbAgregar.setEnabled(false);
-        jbEliminar.setEnabled(false);
-        jbNuevo.setEnabled(false);
-    }
+public void block(){
+jtApellido.setEnabled(false);
+jtNombre.setEnabled(false);
+jrbTrue.setEnabled(false);
+jrbFalse.setEnabled(false);
+jdcFNacimiento.setEnabled(false);
+jbGuardar.setEnabled(false);
+jbAgregar.setEnabled(false);
+jbEliminar.setEnabled(false);
+jbNuevo.setEnabled(false);
+}
 
-    public void disblock() {
-        jtApellido.setEnabled(true);
-        jtNombre.setEnabled(true);
-        jrbTrue.setEnabled(true);
-        jrbFalse.setEnabled(true);
-        jdcFNacimiento.setEnabled(true);
-        jbAgregar.setEnabled(true);
+public void disblock(){
+jtApellido.setEnabled(true);
+jtNombre.setEnabled(true);
+jrbTrue.setEnabled(true);
+jrbFalse.setEnabled(true);
+jdcFNacimiento.setEnabled(true);
+jbAgregar.setEnabled(true);
 
-    }
 
-    public void bBlock() {
-        jbGuardar.setEnabled(true);
-        jbEliminar.setEnabled(true);
-        jbNuevo.setEnabled(true);
-        jbAgregar.setEnabled(false);
-    }
+}
+
+public void bBlock(){
+           jbGuardar.setEnabled(true);
+           jbEliminar.setEnabled(true);
+           jbNuevo.setEnabled(true);
+           jbAgregar.setEnabled(false);
+}
 }
