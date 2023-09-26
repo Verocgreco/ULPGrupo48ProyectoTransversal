@@ -42,6 +42,7 @@ public class ManejoNotas extends javax.swing.JInternalFrame {
         initComponents();
         CargarCombo();
         cargarCabecera();
+        CargarNotas();
     }
 
     /**
@@ -191,5 +192,15 @@ int cf1;
         modelo.addColumn("NOTA");
         jtTabla.setModel(modelo);
     }//METODO
+    
+    
+    public void CargarNotas(){
+    
+            modelo.setRowCount(0);
+        Alumno alumnos = (Alumno) jcbAlumnos.getItemAt(0);
+        for (Inscripcion insc : inscData.ObtenerInscripcionesPorAlumno(alumnos.getIdAlumno())) {
+            modelo.addRow(new Object[]{insc.getMateria().getIdMateria(), insc.getMateria().getNombre(), insc.getNota()});
+        }//FOR-EACH
+    }
 
 }

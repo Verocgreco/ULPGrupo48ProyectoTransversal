@@ -34,6 +34,7 @@ InscripcionData inscData = new InscripcionData();
         initComponents();
         CargarCombo();
         CargarCabecera();
+        matInsc();
     }
 
     /**

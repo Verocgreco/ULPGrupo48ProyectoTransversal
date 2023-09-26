@@ -82,6 +82,11 @@ MateriaData matData = new MateriaData();
         });
 
         jtNombre.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 13)); // NOI18N
+        jtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtNombreKeyReleased(evt);
+            }
+        });
 
         jtAnio.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 13)); // NOI18N
 
@@ -225,10 +230,11 @@ MateriaData matData = new MateriaData();
                         }else{
                                 jrbFalse.setSelected(true);
                         }//IF-ELSE
-                        Bdisblock();
+                        BuscarDisblock();
+                        
                 }
-//                }else if (){
-//                    System.out.println("11");}
+//               }else if (){
+                  
                         
 
             }catch(NullPointerException e){
@@ -277,7 +283,8 @@ MateriaData matData = new MateriaData();
                             mat.setEstado(false);
                             }
                                 matData.ModificarMateria(mat);
-                                   
+                                LimpiarCampos();
+                                block();
                                     
                         }//IF
 //                    }//FOR EACH
@@ -305,7 +312,8 @@ MateriaData matData = new MateriaData();
         // TODO add your handling code here:
                if(!jtIdMat.getText().isEmpty()){
                    
-                   block();
+                   IdMatBlock();
+                   
        }else if(jtIdMat.getText().isEmpty()){
            
        block();
@@ -318,6 +326,17 @@ MateriaData matData = new MateriaData();
         block();
         jtIdMat.setEnabled(true);
     }//GEN-LAST:event_jbNuevoActionPerformed
+
+    private void jtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtNombreKeyReleased
+        // TODO add your handling code here:
+        if(!jtNombre.getText().isEmpty()&& jtIdMat.getText().isEmpty()){
+        NombreDisblock();
+        }else if(jtNombre.getText().isEmpty()&& !jtIdMat.getText().isEmpty()){
+        BuscarDisblock();
+        jbNuevo.setEnabled(true);
+        }else if(jtNombre.getText().isEmpty()){
+        block();}
+    }//GEN-LAST:event_jtNombreKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -341,7 +360,7 @@ MateriaData matData = new MateriaData();
 
 public void block(){
 
-jtNombre.setEnabled(false);
+jtNombre.setEnabled(true);
 jrbTrue.setEnabled(false);
 jrbFalse.setEnabled(false);
 jtAnio.setEnabled(false);
@@ -349,9 +368,9 @@ jbGuardar.setEnabled(false);
 jbAgregar.setEnabled(false);
 jbEliminar.setEnabled(false);
 jbNuevo.setEnabled(false);
-
+jbBuscar.setEnabled(true);
+jtIdMat.setEnabled(true);
 }
-
 public void disblock(){
 
 jtNombre.setEnabled(true);
@@ -362,16 +381,40 @@ jbAgregar.setEnabled(true);
 ;
 
 }
-public void Bdisblock(){
+public void BuscarDisblock(){
 jtNombre.setEnabled(true);
 jrbTrue.setEnabled(true);
-jrbFalse.setEnabled(true);
+jrbFalse.setEnabled(false);
 jtAnio.setEnabled(true);
 jbGuardar.setEnabled(true);
 jbAgregar.setEnabled(false);
 jbEliminar.setEnabled(true);
 jbNuevo.setEnabled(true);
 jtIdMat.setEnabled(false);
+jbBuscar.setEnabled(false);
+}
+public void NombreDisblock(){
+jtNombre.setEnabled(true);
+jrbTrue.setEnabled(true);
+jrbFalse.setEnabled(false);
+jtAnio.setEnabled(true);
+jbGuardar.setEnabled(false);
+jbAgregar.setEnabled(true);
+jbEliminar.setEnabled(false);
+jbNuevo.setEnabled(true);
+jtIdMat.setEnabled(false);
+jbBuscar.setEnabled(false);}
+public void IdMatBlock(){
+jtNombre.setEnabled(false);
+jrbTrue.setEnabled(false);
+jrbFalse.setEnabled(false);
+jtAnio.setEnabled(false);
+jbGuardar.setEnabled(false);
+jbAgregar.setEnabled(false);
+jbEliminar.setEnabled(false);
+jbNuevo.setEnabled(true);
+jbBuscar.setEnabled(true);
+jtIdMat.setEnabled(true);
 }
 public void LimpiarCampos(){
     jtIdMat.setText("");
