@@ -46,7 +46,7 @@ public void GuardarAlumno(Alumno alumno){
         }
         psGA.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a alumnos"+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: DNI duplicado");
         }
         
         
@@ -174,7 +174,7 @@ PreparedStatement psMA = null;
             JOptionPane.showMessageDialog(null, "Cambio Exitoso");
             }else{
                     
-                JOptionPane.showMessageDialog(null,"Erorr al Modificar Alumno");
+                JOptionPane.showMessageDialog(null,"Error al Modificar Alumno");
             }
             
             

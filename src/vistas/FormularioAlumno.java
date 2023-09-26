@@ -199,17 +199,20 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jrbTrue)
                     .addComponent(jrbFalse))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
-                    .addComponent(jdcFNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbNuevo)
-                    .addComponent(jbAgregar)
-                    .addComponent(jbGuardar)
-                    .addComponent(jbEliminar))
-                .addGap(34, 34, 34))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbNuevo)
+                            .addComponent(jbAgregar)
+                            .addComponent(jbGuardar)
+                            .addComponent(jbEliminar))
+                        .addGap(34, 34, 34))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jdcFNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -232,9 +235,9 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             this.jtDni.requestFocus();
             System.out.println(idAlum);
         } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "Error no encotrado");
+            JOptionPane.showMessageDialog(this, "No se encontró el alumno");
         } catch (NumberFormatException nf) {
-            JOptionPane.showMessageDialog(this, "Ingrese numeros Pls");
+            JOptionPane.showMessageDialog(this, "DNI incorrecto");
         }//TRY-CATCH
 
 
@@ -271,7 +274,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(this, "Error no encotrado");
         } catch (NumberFormatException nf) {
-            JOptionPane.showMessageDialog(this, "Ingrese numeros Pls");
+            JOptionPane.showMessageDialog(this, "DNI incorrecto");
         }//TRY-CATCH
     }//GEN-LAST:event_jbGuardarActionPerformed
 
@@ -317,7 +320,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(this, "Complete todos los Campos");
         } catch (NumberFormatException nf) {
-            JOptionPane.showMessageDialog(this, "Ingrese numeros Pls");
+            JOptionPane.showMessageDialog(this, "Campo DNI debe ser numérico");
         }//TRY-CATCH
 
     }//GEN-LAST:event_jbAgregarActionPerformed
