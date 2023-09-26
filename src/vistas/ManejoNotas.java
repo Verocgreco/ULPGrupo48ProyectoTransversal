@@ -18,26 +18,27 @@ import javax.swing.table.DefaultTableModel;
  * @author arielvallejos
  */
 public class ManejoNotas extends javax.swing.JInternalFrame {
-private Connection conn=null;
-private DefaultTableModel modelo =new DefaultTableModel(){
-    public boolean isCellEditable(int filas, int columnas) {
-        if(columnas>1){   // LAS COLUMNAS MAYORES A 1 SON EDITABLES
-        return true;
-        }else{
-        return false;    // MENORES A 1 NO SON EDITABLES
-        }
-    }
-};
-          
 
-AlumnoData aluData =new AlumnoData();
-InscripcionData inscData =new InscripcionData();
+    private Connection conn = null;
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int filas, int columnas) {
+            if (columnas > 1) {   // LAS COLUMNAS MAYORES A 1 SON EDITABLES
+                return true;
+            } else {
+                return false;    // MENORES A 1 NO SON EDITABLES
+            }
+        }
+    };
+
+    AlumnoData aluData = new AlumnoData();
+    InscripcionData inscData = new InscripcionData();
+
     /**
      * Creates new form ManejoNotas
      */
     public ManejoNotas() {
-        this.conn=Conexion.getConexion();
-        
+        this.conn = Conexion.getConexion();
+
         initComponents();
         CargarCombo();
         cargarCabecera();
@@ -133,35 +134,36 @@ InscripcionData inscData =new InscripcionData();
     private void jcbAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbAlumnosActionPerformed
         // TODO add your handling code here:
         modelo.setRowCount(0);
-            Alumno alumnos=(Alumno)jcbAlumnos.getSelectedItem();
-                for(Inscripcion insc:inscData.ObtenerInscripcionesPorAlumno(alumnos.getIdAlumno())){
-                    modelo.addRow(new Object[]{insc.getMateria().getIdMateria(),insc.getMateria().getNombre(),insc.getNota()});
-                }//FOR-EACH
-        
+        Alumno alumnos = (Alumno) jcbAlumnos.getSelectedItem();
+        for (Inscripcion insc : inscData.ObtenerInscripcionesPorAlumno(alumnos.getIdAlumno())) {
+            modelo.addRow(new Object[]{insc.getMateria().getIdMateria(), insc.getMateria().getNombre(), insc.getNota()});
+        }//FOR-EACH
+
     }//GEN-LAST:event_jcbAlumnosActionPerformed
 
     private void jtTablaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtTablaKeyReleased
         // TODO add your handling code here:
-        try{
-                if(evt.getKeyCode()==KeyEvent.VK_ENTER){ // CAPTURA EL EVENTO DE APRETAR EL ENTER
-        
-            Alumno alumnos=(Alumno)jcbAlumnos.getSelectedItem();             
-            int id = (int) modelo.getValueAt(jtTabla.getSelectedRow(), 0);
-            double nota = Double.parseDouble((String)modelo.getValueAt(jtTabla.getSelectedRow(), 2));
-            
-            
-                inscData.ActualizarNota( nota,alumnos.getIdAlumno(), id);
-        
+        try {
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // CAPTURA EL EVENTO DE APRETAR EL ENTER
+                double nota = Double.parseDouble((String) modelo.getValueAt(jtTabla.getSelectedRow(), 2));
+                if (nota > 0 && nota <= 10) {
+                Alumno alumnos = (Alumno) jcbAlumnos.getSelectedItem();
+                int id = (int) modelo.getValueAt(jtTabla.getSelectedRow(), 0);
+
+                inscData.ActualizarNota(nota, alumnos.getIdAlumno(), id);
+                }else{
+                     JOptionPane.showMessageDialog(this, "Ingrese una nota entre 0 y 10");
+                }
             }
-        }catch(NumberFormatException nf){
-            JOptionPane.showMessageDialog(this,"Ingrese numeros Pls");
-           }catch(NullPointerException np){
-            JOptionPane.showMessageDialog(this,"Seleccione Datos");
-        }catch(ClassCastException cc){
-            JOptionPane.showMessageDialog(this,"Actualice en la tabla Dsp Boton");
-            
-        } catch(ArrayIndexOutOfBoundsException e){
-            JOptionPane.showMessageDialog(this,"error al Recorrer");
+        } catch (NumberFormatException nf) {
+            JOptionPane.showMessageDialog(this, "Ingrese numeros Pls");
+        } catch (NullPointerException np) {
+            JOptionPane.showMessageDialog(this, "Seleccione alumno y materia");
+        } catch (ClassCastException cc) {
+            JOptionPane.showMessageDialog(this, "Actualice en la tabla Dsp Boton");
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(this, "error al Recorrer");
         }//TRY-CATCH
     }//GEN-LAST:event_jtTablaKeyReleased
 
@@ -175,20 +177,19 @@ InscripcionData inscData =new InscripcionData();
     // End of variables declaration//GEN-END:variables
 int cf1;
 
-public void CargarCombo(){
-    
-    for(Alumno alumno : aluData.listarAlumnos()){
-    
-        jcbAlumnos.addItem(alumno);
-    }//FOR-EACH 
-}//METODO
+    public void CargarCombo() {
 
-public void cargarCabecera(){
+        for (Alumno alumno : aluData.listarAlumnos()) {
+
+            jcbAlumnos.addItem(alumno);
+        }//FOR-EACH 
+    }//METODO
+
+    public void cargarCabecera() {
         modelo.addColumn("CODIGO");
         modelo.addColumn("NOMBRE");
-        modelo.addColumn("NOTA");        
-    jtTabla.setModel(modelo);
-}//METODO
-
+        modelo.addColumn("NOTA");
+        jtTabla.setModel(modelo);
+    }//METODO
 
 }

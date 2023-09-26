@@ -73,7 +73,7 @@ public class InscripcionData {
 
             if(fila >0){
             
-            JOptionPane.showMessageDialog(null,"ACTUALIZADO CON EXITO" + fila);
+            JOptionPane.showMessageDialog(null,"NOTA ACTUALIZADA CON ÉXITO" );
             
             }
             
