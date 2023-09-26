@@ -29,7 +29,7 @@ public class MateriaData {
     
     
     public void guardarMateria(Materia materia){
-        String sqlGM="INSERT INTO materia(,nombre,anio,estado) VALUES(?,?,?)";
+        String sqlGM="INSERT INTO materia(nombre,anio,estado) VALUES(?,?,?)";
             try {
 
                 PreparedStatement psGM=conn.prepareStatement(sqlGM,Statement.RETURN_GENERATED_KEYS);
@@ -42,11 +42,11 @@ public class MateriaData {
                 ResultSet rsGM=psGM.getGeneratedKeys();
                 if(rsGM.next()){
                         materia.setIdMateria(rsGM.getInt(1));
-                        JOptionPane.showMessageDialog(null, "Materia Agg con Exito");
+                        JOptionPane.showMessageDialog(null, "Materia agregada con éxito");
                 }
                 
             } catch (SQLException ex) {
-          JOptionPane.showMessageDialog(null, "Error en GM");
+          JOptionPane.showMessageDialog(null, "Error: La materia ya existe");
         }
     
     }
@@ -103,7 +103,7 @@ public class MateriaData {
             }
             
         } catch (SQLException ex) {
-         JOptionPane.showMessageDialog(null ,"Error Al Conectar MM"+ex.getMessage());  
+         JOptionPane.showMessageDialog(null ,"Error: La materia ya existe");  
         }
     }
    
@@ -118,7 +118,7 @@ public class MateriaData {
             int fila=psEM.executeUpdate();
             
             if(fila==1){
-                JOptionPane.showMessageDialog(null, "Ejecucion EXITOSA EM");
+                JOptionPane.showMessageDialog(null, "Materia eliminada");
                 
             }else{
             JOptionPane.showMessageDialog(null, "Error al ELiminar EM");}
