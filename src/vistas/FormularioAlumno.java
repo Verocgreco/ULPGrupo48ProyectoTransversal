@@ -136,7 +136,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 120, Short.MAX_VALUE)
+                .addGap(0, 122, Short.MAX_VALUE)
                 .addComponent(jbNuevo)
                 .addGap(18, 18, 18)
                 .addComponent(jbAgregar)
@@ -174,7 +174,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbBuscar)
                     .addComponent(jdcFNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(80, 80, 80))
+                .addGap(88, 88, 88))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,87 +195,92 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4)
                     .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jrbTrue)
-                    .addComponent(jrbFalse))
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbNuevo)
-                            .addComponent(jbAgregar)
-                            .addComponent(jbGuardar)
-                            .addComponent(jbEliminar))
-                        .addGap(34, 34, 34))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jdcFNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jrbTrue)
+                            .addComponent(jrbFalse))
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel6))
+                    .addComponent(jdcFNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbNuevo)
+                    .addComponent(jbAgregar)
+                    .addComponent(jbGuardar)
+                    .addComponent(jbEliminar))
+                .addGap(34, 34, 34))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
-
-        try {
-            Alumno AluEnc = aluData.BuscarAlumno(Integer.parseInt(jtDni.getText()));
-            idAlum = AluEnc.getIdAlumno();
-            jtApellido.setText(AluEnc.getApellido());
-            jtNombre.setText(AluEnc.getNombre());
-            if (AluEnc.isEstado() == true) {
-                jrbTrue.setSelected(true);
-            } else if (AluEnc.isEstado() == false) {
-                jrbFalse.setSelected(true);
-            }//IF-ELSE
-            jdcFNacimiento.setDate(Date.valueOf(AluEnc.getFechaNacimiento()));
-            bBlock();
-            this.jtDni.requestFocus();
-            System.out.println(idAlum);
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "No se encontró el alumno");
-        } catch (NumberFormatException nf) {
-            JOptionPane.showMessageDialog(this, "DNI incorrecto");
-        }//TRY-CATCH
-
+        if (!jtDni.getText().isEmpty()) {
+            try {
+                Alumno AluEnc = aluData.BuscarAlumno(Integer.parseInt(jtDni.getText()));
+                idAlum = AluEnc.getIdAlumno();
+                jtApellido.setText(AluEnc.getApellido());
+                jtNombre.setText(AluEnc.getNombre());
+                if (AluEnc.isEstado() == true) {
+                    jrbTrue.setSelected(true);
+                } else if (AluEnc.isEstado() == false) {
+                    jrbFalse.setSelected(true);
+                }//IF-ELSE
+                jdcFNacimiento.setDate(Date.valueOf(AluEnc.getFechaNacimiento()));
+                bBlock();
+                this.jtDni.requestFocus();
+                System.out.println(idAlum);
+            } catch (NullPointerException e) {
+                JOptionPane.showMessageDialog(this, "No se encontró el alumno");
+            } catch (NumberFormatException nf) {
+                JOptionPane.showMessageDialog(this, "DNI incorrecto");
+            }//TRY-CATCH
+        } else {
+            JOptionPane.showMessageDialog(this, "Complete campo DNI");
+        }
 
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        // TODO add your handling code here:
-        try {
-            int dni = Integer.parseInt(jtDni.getText());
-            LocalDate fechaNacimiento = jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            if (dni > 0) {
-                // VALIDAR QUE LA FECHA SEA ANTERIOR A LA ACTUAL.
-                LocalDate fechaActual = LocalDate.now();
-                if (fechaNacimiento.isBefore(fechaActual)) {
-                    Alumno alumno = aluData.BuscarAlumnoPorId(idAlum);
-                    alumno.setDni(Integer.parseInt(jtDni.getText()));
-                    alumno.setApellido(jtApellido.getText());
-                    alumno.setNombre(jtNombre.getText());
-                    alumno.setFechaNacimiento(jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-                    if (jrbTrue.isSelected()) {
-                        alumno.setEstado(true);
+        if ((!jtDni.getText().isEmpty()) && (!jtApellido.getText().isEmpty()) && (!jtNombre.getText().isEmpty())
+                && (jdcFNacimiento.getDate() != null) && (jrbTrue.isSelected() == true
+                || jrbFalse.isSelected() == true)) {
+            try {
+                int dni = Integer.parseInt(jtDni.getText());
+                LocalDate fechaNacimiento = jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                if (dni > 0) {
+                    // VALIDAR QUE LA FECHA SEA ANTERIOR A LA ACTUAL.
+                    LocalDate fechaActual = LocalDate.now();
+                    if (fechaNacimiento.isBefore(fechaActual)) {
+                        Alumno alumno = aluData.BuscarAlumnoPorId(idAlum);
+                        alumno.setDni(Integer.parseInt(jtDni.getText()));
+                        alumno.setApellido(jtApellido.getText());
+                        alumno.setNombre(jtNombre.getText());
+                        alumno.setFechaNacimiento(jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                        if (jrbTrue.isSelected()) {
+                            alumno.setEstado(true);
 
-                    } else if (jrbFalse.isSelected()) {
-                        alumno.setEstado(false);
-                    }//IF-ELSE 
+                        } else if (jrbFalse.isSelected()) {
+                            alumno.setEstado(false);
+                        }//IF-ELSE 
 
-                    aluData.modificarAlumnos(alumno);
-                }else{
-                    JOptionPane.showMessageDialog(this, "Ingrese una fecha válida");
+                        aluData.modificarAlumnos(alumno);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Ingrese una fecha válida");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ingrese un DNI válido");
                 }
-            }else{
-                JOptionPane.showMessageDialog(this, "Ingrese un DNI válido");
-            }
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "Error no encotrado");
-        } catch (NumberFormatException nf) {
-            JOptionPane.showMessageDialog(this, "DNI incorrecto");
-        }//TRY-CATCH
+            } catch (NullPointerException e) {
+                JOptionPane.showMessageDialog(this, "Error no encotrado");
+            } catch (NumberFormatException nf) {
+                JOptionPane.showMessageDialog(this, "DNI incorrecto");
+            }//TRY-CATCH
+        } else {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos");
+        }
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
@@ -291,7 +296,9 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
-        // TODO add your handling code here:
+        if ((!jtDni.getText().isEmpty()) && (!jtApellido.getText().isEmpty()) && (!jtNombre.getText().isEmpty())
+                && (jdcFNacimiento.getDate() != null) && (jrbTrue.isSelected() == true
+                || jrbFalse.isSelected() == true)) {
         try {
             int dni = Integer.parseInt(jtDni.getText());
             LocalDate fechaNacimiento = jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -322,7 +329,9 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         } catch (NumberFormatException nf) {
             JOptionPane.showMessageDialog(this, "Campo DNI debe ser numérico");
         }//TRY-CATCH
-
+        }else{
+           JOptionPane.showMessageDialog(this, "Complete todos los campos"); 
+        }
     }//GEN-LAST:event_jbAgregarActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
@@ -338,24 +347,24 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             jbNuevo.setEnabled(true);
         } else if (jtDni.getText().isEmpty()) {
             block();
-            
+
 //            jtApellido.setEnabled(true);
         }
     }//GEN-LAST:event_jtDniKeyReleased
 
     private void jtApellidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtApellidoKeyReleased
         // TODO add your handling code here:
-        if(!jtApellido.getText().isEmpty() && !jtDni.getText().isEmpty()){
+        if (!jtApellido.getText().isEmpty() && !jtDni.getText().isEmpty()) {
             jbBuscar.setEnabled(false);
-        }else if (jtApellido.getText().isEmpty() && !jtDni.getText().isEmpty()){
+        } else if (jtApellido.getText().isEmpty() && !jtDni.getText().isEmpty()) {
             jbBuscar.setEnabled(true);
-                jtApellido.setEnabled(false);
-                block();
-        }else if (jtApellido.getText().isEmpty() && jtDni.getText().isEmpty()){
-                block();
-        
+            jtApellido.setEnabled(false);
+            block();
+        } else if (jtApellido.getText().isEmpty() && jtDni.getText().isEmpty()) {
+            block();
+
         }
-        
+
     }//GEN-LAST:event_jtApellidoKeyReleased
 
 
@@ -390,31 +399,31 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     }
 
     public void block() {
-    jtApellido.setEnabled(false);
-    jtNombre.setEnabled(false);
-    jrbTrue.setEnabled(false);
-    jrbFalse.setEnabled(false);
-    jdcFNacimiento.setEnabled(false);
-    jbGuardar.setEnabled(false);
-    jbAgregar.setEnabled(false);
-    jbEliminar.setEnabled(false);
-    jbNuevo.setEnabled(false);
+        jtApellido.setEnabled(false);
+        jtNombre.setEnabled(false);
+        jrbTrue.setEnabled(false);
+        jrbFalse.setEnabled(false);
+        jdcFNacimiento.setEnabled(false);
+        jbGuardar.setEnabled(false);
+        jbAgregar.setEnabled(false);
+        jbEliminar.setEnabled(false);
+        jbNuevo.setEnabled(false);
     }
 
     public void disblock() {
-    jtApellido.setEnabled(true);
-    jtNombre.setEnabled(true);
-    jrbTrue.setEnabled(true);
-    jrbFalse.setEnabled(false);
-    jdcFNacimiento.setEnabled(true);
-    jbAgregar.setEnabled(true);
+        jtApellido.setEnabled(true);
+        jtNombre.setEnabled(true);
+        jrbTrue.setEnabled(true);
+        jrbFalse.setEnabled(false);
+        jdcFNacimiento.setEnabled(true);
+        jbAgregar.setEnabled(true);
 
     }
 
     public void bBlock() {
-    jbGuardar.setEnabled(true);
-    jbEliminar.setEnabled(true);
-    jbNuevo.setEnabled(true);
-    jbAgregar.setEnabled(false);
+        jbGuardar.setEnabled(true);
+        jbEliminar.setEnabled(true);
+        jbNuevo.setEnabled(true);
+        jbAgregar.setEnabled(false);
     }
 }
