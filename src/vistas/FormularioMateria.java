@@ -286,20 +286,20 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                     int anio = Integer.parseInt(jtAnio.getText());
                     if (anio > 0) {
 //                    for(Materia mat:matData.ListarMateria()){
-                        Materia mat = matData.BuscarMateria(Integer.parseInt(jtIdMat.getText()));                       
-                            mat.setNombre(jtNombre.getText());
-                            mat.setAnioMateria(Integer.parseInt(jtAnio.getText()));
-                            if (jrbTrue.isSelected()) {
-                                mat.setEstado(true);
-                            } else if (jrbFalse.isSelected()) {
-                                mat.setEstado(false);
-                            }
-                            matData.ModificarMateria(mat);
-                            LimpiarCampos();
-                            block();
-                        }else {
-                    JOptionPane.showMessageDialog(this, "Debe ingresar un año válido");                    
-                } 
+                        Materia mat = matData.BuscarMateria(Integer.parseInt(jtIdMat.getText()));
+                        mat.setNombre(jtNombre.getText());
+                        mat.setAnioMateria(Integer.parseInt(jtAnio.getText()));
+                        if (jrbTrue.isSelected()) {
+                            mat.setEstado(true);
+                        } else if (jrbFalse.isSelected()) {
+                            mat.setEstado(false);
+                        }
+                        matData.ModificarMateria(mat);
+                        //LimpiarCampos();
+                        // block();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Debe ingresar un año válido");
+                    }
 //                    }//FOR EACH
                 }//IF isEmpty
             } catch (NullPointerException e) {
@@ -322,6 +322,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
             }//IF
 
         }//FOR EACH
+        actualizarMatEliminada();
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jtIdMatKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtIdMatKeyReleased
@@ -445,5 +446,22 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
         jtAnio.setText("");
         gruupo2.clearSelection();
 
+    }
+
+    public void actualizarMatEliminada() {
+        Materia matEnc = matData.BuscarMateria(Integer.parseInt(jtIdMat.getText()));
+
+        if (Integer.parseInt(jtIdMat.getText()) == matEnc.getIdMateria()) {
+
+            jtNombre.setText(matEnc.getNombre());
+            jtAnio.setText(matEnc.getAnioMateria() + "");
+
+            if (matEnc.isEstado() == true) {
+                jrbTrue.setSelected(true);
+            } else {
+                jrbFalse.setSelected(true);
+            }//IF-ELSE
+            BuscarDisblock();
+        }
     }
 }

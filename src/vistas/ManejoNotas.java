@@ -148,20 +148,22 @@ public class ManejoNotas extends javax.swing.JInternalFrame {
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // CAPTURA EL EVENTO DE APRETAR EL ENTER
                 double nota = Double.parseDouble((String) modelo.getValueAt(jtTabla.getSelectedRow(), 2));
                 if (nota >= 0 && nota <= 10) {
-                Alumno alumnos = (Alumno) jcbAlumnos.getSelectedItem();
-                int id = (int) modelo.getValueAt(jtTabla.getSelectedRow(), 0);
+                    Alumno alumnos = (Alumno) jcbAlumnos.getSelectedItem();
+                    int id = (int) modelo.getValueAt(jtTabla.getSelectedRow(), 0);
 
-                inscData.ActualizarNota(nota, alumnos.getIdAlumno(), id);
-                }else{
-                     JOptionPane.showMessageDialog(this, "Ingrese una nota entre 0 y 10");
+                    inscData.ActualizarNota(nota, alumnos.getIdAlumno(), id);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ingrese una nota entre 0 y 10");
+                    actualizarNotas();
                 }
             }
         } catch (NumberFormatException nf) {
             JOptionPane.showMessageDialog(this, "Ingrese números por favor");
+            actualizarNotas();
         } catch (NullPointerException np) {
             JOptionPane.showMessageDialog(this, "Seleccione alumno y materia");
         } catch (ClassCastException cc) {
-            JOptionPane.showMessageDialog(this, "Actualice en la tabla Dsp Boton");
+            JOptionPane.showMessageDialog(this, "Actualice la nota luego presione Enter");
 
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(this, "error al Recorrer");
@@ -192,12 +194,19 @@ int cf1;
         modelo.addColumn("NOTA");
         jtTabla.setModel(modelo);
     }//METODO
-    
-    
-    public void CargarNotas(){
-    
-            modelo.setRowCount(0);
+
+    public void CargarNotas() {
+
+        modelo.setRowCount(0);
         Alumno alumnos = (Alumno) jcbAlumnos.getItemAt(0);
+        for (Inscripcion insc : inscData.ObtenerInscripcionesPorAlumno(alumnos.getIdAlumno())) {
+            modelo.addRow(new Object[]{insc.getMateria().getIdMateria(), insc.getMateria().getNombre(), insc.getNota()});
+        }//FOR-EACH
+    }
+
+    public void actualizarNotas() {
+        modelo.setRowCount(0);
+        Alumno alumnos = (Alumno) jcbAlumnos.getSelectedItem();
         for (Inscripcion insc : inscData.ObtenerInscripcionesPorAlumno(alumnos.getIdAlumno())) {
             modelo.addRow(new Object[]{insc.getMateria().getIdMateria(), insc.getMateria().getNombre(), insc.getNota()});
         }//FOR-EACH
