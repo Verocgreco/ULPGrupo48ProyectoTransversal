@@ -131,7 +131,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             }
         });
 
-        jdcFNacimiento.setDateFormatString("dd-MMM-yyyy");
+        jdcFNacimiento.setDateFormatString("dd-MM-yyyy");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
