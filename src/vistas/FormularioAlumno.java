@@ -131,6 +131,8 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             }
         });
 
+        jdcFNacimiento.setDateFormatString("dd-MMM-yyyy");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -174,7 +176,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbBuscar)
                     .addComponent(jdcFNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(60, 60, 60))
+                .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,17 +201,20 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jrbTrue)
                     .addComponent(jrbFalse))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
-                    .addComponent(jdcFNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbNuevo)
-                    .addComponent(jbAgregar)
-                    .addComponent(jbGuardar)
-                    .addComponent(jbEliminar))
-                .addGap(34, 34, 34))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbNuevo)
+                            .addComponent(jbAgregar)
+                            .addComponent(jbGuardar)
+                            .addComponent(jbEliminar))
+                        .addGap(34, 34, 34))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jdcFNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -230,7 +235,6 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                 jdcFNacimiento.setDate(Date.valueOf(AluEnc.getFechaNacimiento()));
                 bBlock();
                 this.jtDni.requestFocus();
-                System.out.println(idAlum);
             } catch (NullPointerException e) {
                 JOptionPane.showMessageDialog(this, "No se encontró el alumno");
             } catch (NumberFormatException nf) {
@@ -291,6 +295,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             }//IF
 
         }//FOR EACH
+        actualizarEliminado();
 
     }//GEN-LAST:event_jbEliminarActionPerformed
 
@@ -298,38 +303,38 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         if ((!jtDni.getText().isEmpty()) && (!jtApellido.getText().isEmpty()) && (!jtNombre.getText().isEmpty())
                 && (jdcFNacimiento.getDate() != null) && (jrbTrue.isSelected() == true
                 || jrbFalse.isSelected() == true)) {
-        try {
-            int dni = Integer.parseInt(jtDni.getText());
-            LocalDate fechaNacimiento = jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            if (dni > 0) {
-                LocalDate fechaActual = LocalDate.now();
-                if (fechaNacimiento.isBefore(fechaActual)) {
-                    Alumno alumno = new Alumno();
-                    alumno.setDni(Integer.parseInt(jtDni.getText()));
-                    alumno.setApellido(jtApellido.getText());
-                    alumno.setNombre(jtNombre.getText());
-                    alumno.setFechaNacimiento(jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-                    if (jrbTrue.isSelected()) {
-                        alumno.setEstado(true);
-                    } else if (jrbFalse.isSelected()) {
-                        alumno.setEstado(false);
-                    }//IF-ELSE                
-                    aluData.GuardarAlumno(alumno);
-                    LimpiarCampos();
-                    block();
+            try {
+                int dni = Integer.parseInt(jtDni.getText());
+                LocalDate fechaNacimiento = jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                if (dni > 0) {
+                    LocalDate fechaActual = LocalDate.now();
+                    if (fechaNacimiento.isBefore(fechaActual)) {
+                        Alumno alumno = new Alumno();
+                        alumno.setDni(Integer.parseInt(jtDni.getText()));
+                        alumno.setApellido(jtApellido.getText());
+                        alumno.setNombre(jtNombre.getText());
+                        alumno.setFechaNacimiento(jdcFNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                        if (jrbTrue.isSelected()) {
+                            alumno.setEstado(true);
+                        } else if (jrbFalse.isSelected()) {
+                            alumno.setEstado(false);
+                        }//IF-ELSE                
+                        aluData.GuardarAlumno(alumno);
+                        LimpiarCampos();
+                        block();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Ingrese una fecha válida");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Ingrese una fecha válida");
+                    JOptionPane.showMessageDialog(this, "Ingrese un DNI válido");
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "Ingrese un DNI válido");
-            }
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "Complete todos los Campos");
-        } catch (NumberFormatException nf) {
-            JOptionPane.showMessageDialog(this, "Campo DNI debe ser numérico");
-        }//TRY-CATCH
-        }else{
-           JOptionPane.showMessageDialog(this, "Complete todos los campos"); 
+            } catch (NullPointerException e) {
+                JOptionPane.showMessageDialog(this, "Complete todos los Campos");
+            } catch (NumberFormatException nf) {
+                JOptionPane.showMessageDialog(this, "DNI incorrecto");
+            }//TRY-CATCH
+        } else {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos");
         }
     }//GEN-LAST:event_jbAgregarActionPerformed
 
@@ -425,5 +430,18 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         jbEliminar.setEnabled(true);
         jbNuevo.setEnabled(true);
         jbAgregar.setEnabled(false);
+    }
+
+    public void actualizarEliminado() {
+        Alumno AluEnc = aluData.BuscarAlumno(Integer.parseInt(jtDni.getText()));
+        idAlum = AluEnc.getIdAlumno();
+        jtApellido.setText(AluEnc.getApellido());
+        jtNombre.setText(AluEnc.getNombre());
+        if (AluEnc.isEstado() == true) {
+            jrbTrue.setSelected(true);
+        } else if (AluEnc.isEstado() == false) {
+            jrbFalse.setSelected(true);
+        }//IF-ELSE
+        jdcFNacimiento.setDate(Date.valueOf(AluEnc.getFechaNacimiento()));
     }
 }
