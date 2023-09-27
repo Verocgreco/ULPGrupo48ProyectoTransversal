@@ -40,7 +40,7 @@ private DefaultTableModel modelo =new DefaultTableModel(){
         initComponents();
         cargarMaterias();
         armarCabecera();
-        
+        lista();
     
     }
 
@@ -165,6 +165,14 @@ modelo.addColumn("APELLIDO");
 jtTabla.setModel(modelo);
 
 
+}//METODO
+
+public void lista(){
+    modelo.setRowCount(0);
+    Materia materias = (Materia) jcbMaterias.getSelectedItem();
+    for(Alumno alum:inscData.ObtenerAlumnosPorMateria(materias.getIdMateria())){
+        modelo.addRow(new Object[]{alum.getIdAlumno(),alum.getDni(),alum.getNombre(),alum.getApellido()});
+    }
 }//METODO
 
 }
